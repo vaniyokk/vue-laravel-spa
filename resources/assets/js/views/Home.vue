@@ -5,7 +5,7 @@
                 <div class="message" v-for="status in statuses">
                     <div class="message-header">
                         <p>{{ status.user.name }} said...</p>
-                        <p>{{ postedAt(status) }}</p>
+                        <p>{{ status.created_at | dateAgo }}</p>
                     </div>
 
                     <div class="message-body" v-text="status.body"></div>
@@ -27,9 +27,9 @@
         created() {
             Status.all(statuses => this.statuses = statuses);
         },
-        methods: {
-            postedAt(status) {
-                return moment(status.created_at).fromNow();
+        filters: {
+            dateAgo(date) {
+                return moment(date).fromNow();
             }
         }
     }
